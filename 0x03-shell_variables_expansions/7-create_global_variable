@@ -1,2 +1,2 @@
 #!/bin/bash
-g:BEST= "School" 
+let g:BEST= "School" 
