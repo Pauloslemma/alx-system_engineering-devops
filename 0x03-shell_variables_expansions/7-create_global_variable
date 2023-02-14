@@ -1,2 +1,2 @@
 #!/bin/bash
-Let g:BEST = "School" 
+g:BEST= "School" 
