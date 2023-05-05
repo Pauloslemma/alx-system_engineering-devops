@@ -1,6 +1,7 @@
+<ul>
 <b3>Learning Objectives</b3>
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
-<ul>
+
 <b4>General</b4>
 How to navigate in an Unix system
 How to list files and directories
