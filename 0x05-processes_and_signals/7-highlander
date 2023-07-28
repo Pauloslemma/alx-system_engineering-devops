@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-# Kills the 4-to_infinity_and_beyond process.
+# Displays "To infinity and beyond" indefinitely,
+# with a sleep 2 in between each iteration.
+# Displays "I am invincible!!!" in between each iteration.
 
-pkill -f 4-to_infinity_and_beyond
+while true
+do
+	echo "To infinity and beyond"
+	sleep 2
+	trap 'echo "I am invincible"' SIGTERM 
+done
 
