@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Define the server information
+server_name="254831-web-01"
+server_ip="34.207.155.180"
+ssh_key="/home/your_username/.ssh/school"  # Replace "your_username" with your actual username
+ssh_user="ubuntu"
+
+# Use ssh with single-character flags to connect to the server
+ssh -i "$ssh_key" "$ssh_user"@"$server_ip"
+
