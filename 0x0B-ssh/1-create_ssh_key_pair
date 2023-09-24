@@ -1,3 +1,11 @@
-#!/usr/bin/env bash
-# Creates an RSA key pair
-ssh-keygen -t rsa -f school -b 4096 -N betty
+#!/bin/bash
+
+# Define the server information
+server_name="254831-web-01"
+server_ip="34.207.155.180"
+ssh_key="~/.ssh/school"
+ssh_user="ubuntu"
+
+# Use ssh with single-character flags to connect to the server
+ssh -i "$ssh_key" "$ssh_user"@"$server_ip"
+
