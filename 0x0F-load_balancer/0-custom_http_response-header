@@ -1,38 +1,30 @@
-#!/usr/bin/env bash
-# Installs Nginx with the following configurations:
-#+    Listens on port 80.
-#+    Returns a page containing "Holberton School" when queried
-#+     at the root with a curl GET request.
-#+    Configures /redirect_me as a "301 Moved Permanently".
-#+    Includes a custom 404 page containing "Ceci n'est pas une page".
-#+    Contains a custom HTTP header named X-Served-By.
-#+    The value of the HTTP header is the hostname of the running server.
+#!/bin/bash
 
-apt-get update
-apt-get install -y nginx
+# Install HAProxy
+sudo apt-get update
+sudo apt-get install -y haproxy
 
-mkdir -p /var/www/html
-touch /var/www/html/index.html
-echo "Holberton School" > /var/www/html/index.html
-touch /var/www/html/404.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+# Configure HAProxy
+sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
+sudo touch /etc/haproxy/haproxy.cfg
 
-printf %s "server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    add_header X-Served-By $HOSTNAME;
-    root   /var/www/html;
-    index  index.html index.htm;
+# Configure HAProxy to send traffic to web-01 and web-02 using round-robin
+echo "frontend web
+    bind *:80
+    mode http
+    default_backend app
 
-    location /redirect_me {
-        return 301 http://cuberule.com/;
-    }
+backend app
+    mode http
+    balance roundrobin
+    server web-01 [STUDENT_ID]-web-01:80 check
+    server web-02 [STUDENT_ID]-web-02:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-    error_page 404 /404.html;
-    location /404 {
-      root /var/www/html;
-      internal;
-    }
-}" > /etc/nginx/sites-available/default
+# Enable HAProxy service
+sudo systemctl enable haproxy
+sudo systemctl restart haproxy
 
-service nginx restart
+# Verify HAProxy status
+sudo systemctl status haproxy
+
+
